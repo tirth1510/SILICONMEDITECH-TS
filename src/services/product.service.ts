@@ -1,5 +1,6 @@
-import Demo, { IDemo, IModel, IProductModelDetails } from '@/models/demo.model';
-import dbConnect from '@/lib/db';
+import { Types } from 'mongoose';
+import Demo, { IDemo, IModel, IProductModelDetails } from '../models/demo.model';
+import dbConnect from '../lib/db';
 
 interface CreateProductStep1Data {
   productCategory: string;
@@ -77,7 +78,7 @@ export const addProductModelDetailsService = async (
     throw new Error('Product not found');
   }
 
-  const model = product.productModels.id(modelId);
+  const model = (product.productModels as any).id(modelId);
   if (!model) {
     throw new Error('Model not found');
   }
@@ -324,7 +325,7 @@ export const addColorToModelService = async (
         throw new Error('Product not found');
     }
 
-    const model = product.productModels.id(modelId);
+    const model = (product.productModels as any).id(modelId);
     if (!model) {
         throw new Error('Model not found');
     }
